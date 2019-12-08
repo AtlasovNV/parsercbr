@@ -1,8 +1,5 @@
-import re
-
 from bs4 import BeautifulSoup
 import requests
-
 
 
 headers = {'accept': '*/*',
@@ -11,19 +8,18 @@ url = 'https://www.cbr.ru/'
 
 session = requests.session()
 request_url = session.get(url, headers=headers)
+
 if request_url.status_code == 200:
     print('join')
     result = []
     soup = BeautifulSoup(request_url.text, "html.parser")
     divs = soup.find('div', attrs={'id': 'widget_exchange'}).text
-
-    print(divs)
+    words = list(divs.split('\n'))
+    currency = []
+    for i in words:
+        if 'руб' in i:
+            currency.append(i)
+    currency.split('\n')
+    print(currency)
 else:
     print('Error')
-
-
-    # rub = soup.findAll('div', attrs={'class': 'w_data_wrap'})
-    # print(rub)
-
-    a = []
-    a.append(divs)
